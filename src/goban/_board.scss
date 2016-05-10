@@ -1,0 +1,8 @@
+.goban {
+  position: relative;
+  width:    $board-size;
+  height:   $board-size;
+  display:  flex;
+
+  border:  1px solid $black;
+}

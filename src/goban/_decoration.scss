@@ -1,0 +1,19 @@
+.goban_decoration {
+  position: absolute;
+  display:  flex;
+  top:      0;
+  bottom:   0;
+  left:     0;
+  right:    0;
+
+  margin:        $board-frame-size;
+  margin-right:  $board-frame-size + $board-gutter-size / 2;
+  margin-bottom: $board-frame-size + $board-gutter-size / 2;
+}
+.goban_decoration-lines {
+  position:    relative;
+  margin-top:  $board-gutter-size;
+  margin-left: $board-gutter-size;
+
+  flex: 1;
+}
