@@ -1,0 +1,23 @@
+.goban_coordinates {
+  position: absolute;
+  display:  flex;
+  width:    100%;
+  height:   100%;
+
+  justify-content: space-around;
+}
+.goban_coordinates--horizontal {
+  flex-direction: column;
+  margin-top:     $board-gutter-size/2;
+  width:          $board-gutter-size;
+}
+.goban_coordinates--vertical {
+  flex-direction: row;
+  margin-left:    $board-gutter-size/2;
+  height:         $board-gutter-size;
+}
+
+.goban_coordinate {
+  color: $black;
+  align-self: center;
+}

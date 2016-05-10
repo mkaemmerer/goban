@@ -8,7 +8,7 @@ const funnel      = require('broccoli-funnel');
 
 const SRC_DIR = 'src';
 
-const html    = funnel('src', {include: ['index.html']});
+const html    = funnel(SRC_DIR, {include: ['index.html']});
 const styles  = compileSass([SRC_DIR], 'index.scss', 'goban.css');
 const scripts = compileES6(SRC_DIR, {
     inputFiles: ['**/*.js'],

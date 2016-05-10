@@ -1,0 +1,23 @@
+@import './variables';
+@import './lines';
+@import './coordinates';
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.goban {
+  position: relative;
+  width:    $board-size;
+  height:   $board-size;
+  display:  flex;
+}
+.goban_grid {
+  position:    relative;
+  margin-left: $board-gutter-size;
+  margin-top:  $board-gutter-size;
+
+  flex: 1;
+}

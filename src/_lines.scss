@@ -1,0 +1,26 @@
+.grid_lines {
+  position: absolute;
+  display:  flex;
+  width:    100%;
+  height:   100%;
+
+  justify-content: space-between;
+}
+.grid_lines--horizontal {
+  flex-direction: column;
+}
+.grid_lines--vertical {
+  flex-direction: row;
+}
+
+.grid_line {
+  background-color: $black;
+}
+.grid_line--vertical {
+  width:  1px;
+  height: 100%;
+}
+.grid_line--horizontal {
+  width:  100%;
+  height: 1px;
+}
