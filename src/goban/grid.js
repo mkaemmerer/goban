@@ -1,22 +1,27 @@
 import v from 'v';
 
-const stone = (d) => {
-  const exists = Math.random() > 0.8;
-  const color  = Math.random() > 0.5 ? 'goban_stone--white' : 'goban_stone--black';
-
-  return exists ? v.open('div', {'class': `goban_stone ${color}`}) : v;
+const space = ({location, contents}) => {
+  return v
+    .open('div', {'class': 'goban_grid-space', 'data-x': location.x, 'data-y': location.y})
+      .$if(contents !== null)
+        .append(() => stone(contents.color))
+      .close()
+    .close();
+}
+const stone = (color) => {
+  const color_class = {
+    'white': 'goban_stone--white',
+    'black': 'goban_stone--black'
+  };
+  return v
+    .open('div', {'class': `goban_stone ${color_class[color]}`})
+    .close();
 };
 
-const grid = v
+const grid = (board_data) => v
   .open('div', {'class': 'goban_grid'})
-    .each([1,2,3,4,5,6,7,8,9])
-      .each([1,2,3,4,5,6,7,8,9])
-
-        .open('div', {'class': 'goban_grid-space'})
-          .append(stone)
-        .close()
-
-      .close()
+    .each(board_data.map(d => d.intersections))
+      .append(space)
     .close()
   .close();
 
