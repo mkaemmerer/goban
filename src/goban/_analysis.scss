@@ -1,4 +1,4 @@
-.goban-grid {
+.goban-analysis {
   position: absolute;
   display:  flex;
   top:      0;
@@ -10,15 +10,5 @@
   margin-top:  $board-frame-size + $board-gutter-size / 2;
   margin-left: $board-frame-size + $board-gutter-size / 2;
 
-  flex-flow:       row wrap;
-  justify-content: space-around;
-}
-
-.goban-grid_space {
-  flex:     1 0 (100%/9);
-  display:  flex;
-  position: relative;
-
-  align-items:     center;
-  justify-content: center;
+  pointer-events: none;
 }

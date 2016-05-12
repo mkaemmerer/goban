@@ -14,8 +14,10 @@ class Board {
   intersectionAt({x,y}){
     return this.intersections[x * X_MAX + y];
   }
-  toArray(){
-    return this.intersections.map(i => i.contents);
+  groups(){
+    return new Set(this.intersections)
+      .filter(i => i.contents !== null)
+      .map(i => i.contents);
   }
 
   placeStone(color, location){

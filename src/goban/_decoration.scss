@@ -1,4 +1,4 @@
-.goban_decoration {
+.goban-decoration {
   position: absolute;
   display:  flex;
   top:      0;
@@ -10,7 +10,7 @@
   margin-right:  $board-frame-size + $board-gutter-size / 2;
   margin-bottom: $board-frame-size + $board-gutter-size / 2;
 }
-.goban_decoration-lines {
+.goban-decoration_lines {
   position:    relative;
   margin-top:  $board-gutter-size;
   margin-left: $board-gutter-size;

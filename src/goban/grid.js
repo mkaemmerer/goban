@@ -2,7 +2,7 @@ import v from 'v';
 
 const space = ({location, contents}) => {
   return v
-    .open('div', {'class': 'goban_grid-space', 'data-x': location.x, 'data-y': location.y})
+    .open('div', {'class': 'goban-grid_space', 'data-x': location.x, 'data-y': location.y})
       .$if(contents !== null)
         .append(() => stone(contents.color))
       .close()
@@ -10,16 +10,16 @@ const space = ({location, contents}) => {
 }
 const stone = (color) => {
   const color_class = {
-    'white': 'goban_stone--white',
-    'black': 'goban_stone--black'
+    'white': 'goban-stone--white',
+    'black': 'goban-stone--black'
   };
   return v
-    .open('div', {'class': `goban_stone ${color_class[color]}`})
+    .open('div', {'class': `goban-stone ${color_class[color]}`})
     .close();
 };
 
 const grid = (board_data) => v
-  .open('div', {'class': 'goban_grid'})
+  .open('div', {'class': 'goban-grid'})
     .each(board_data.map(d => d.intersections))
       .append(space)
     .close()

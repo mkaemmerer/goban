@@ -1,4 +1,4 @@
-.goban_stone {
+.goban-stone {
   position: absolute;
   flex:     1;
   left:     0;
@@ -20,9 +20,9 @@
     box-sizing: border-box;
   }
 }
-.goban_stone--white:after {
+.goban-stone--white:after {
   background-color: $white;
 }
-.goban_stone--black:after {
+.goban-stone--black:after {
   background-color: $black;
 }

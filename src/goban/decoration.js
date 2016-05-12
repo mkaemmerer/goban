@@ -4,10 +4,10 @@ import coordinates from './decoration/coordinates';
 import lines       from './decoration/lines';
 
 const decoration = v
-  .open('div', {'class': 'goban_decoration'})
+  .open('div', {'class': 'goban-decoration'})
     .append(coordinates)
 
-    .open('div', {'class': 'goban_decoration-lines'})
+    .open('div', {'class': 'goban-decoration_lines'})
       .append(lines)
     .close()
   .close();

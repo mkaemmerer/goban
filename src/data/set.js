@@ -3,6 +3,9 @@ export default class Set {
     this._members = members;
     this.length   = members.length;
   }
+  toArray(){
+    return this._members;
+  }
 
   contains(e){
     return this._members.indexOf(e) !== -1;
@@ -25,7 +28,10 @@ export default class Set {
   }
 
   map(f){
-    return new Set(this._members.map(f));
+    const members = [];
+    this._members.map(f)
+      .forEach(e => { if(members.indexOf(e) === -1){ members.push(e) }});
+    return new Set(members);
   }
   filter(f){
     return new Set(this._members.filter(f));
