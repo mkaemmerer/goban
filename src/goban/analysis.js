@@ -12,6 +12,7 @@ const mark = (location) => {
 
 const analysis = (board_data) => {
   const analysis_data = board_data.map(analyze);
+  analysis_data.log();
   return v
     .open('div', {'class': 'goban-analysis'})
       .append(atari(analysis_data))

@@ -1,23 +1,42 @@
 import v from 'v';
 
-const mark = (location) => {
+const positionStyle = (location) => {
   const position = {
     top:  (location.x / 9) * 100,
     left: (location.y / 9) * 100
   };
-  const style = `top: ${position.top}%; left: ${position.left}%`;
+  return `top: ${position.top}%; left: ${position.left}%`;
+};
+
+const markGroup = (group) => {
+  return v
+    .each(group.locations.toArray())
+      .open('div').append(markStone).close()
+    .close();
+};
+const markLocation = (location) => {
+  const style = positionStyle(location);
 
   return v
     .open('div', {'class': 'goban-mark goban-mark--atari', 'style': style})
     .close();
-}
-
-const atari = (analysis_data) => {
-  analysis_data.map(d => d.locations.toArray()).log();
+};
+const markStone = (location) => {
+  const style = positionStyle(location);
 
   return v
+    .open('div', {'class': 'goban-mark goban-mark--group-atari', 'style': style})
+    .close();
+};
+
+const atari = (analysis_data) => {
+  return v
+    .each(analysis_data.map(d => d.groups.toArray()))
+      .open('div').append(markGroup).close()
+    .close()
     .each(analysis_data.map(d => d.locations.toArray()))
-      .append(mark);
+      .open('div').append(markLocation).close()
+    .close();
 };
 
 export default atari;
