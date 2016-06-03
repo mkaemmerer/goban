@@ -31,11 +31,9 @@ const markStone = (location) => {
 
 const atari = (analysis_data) => {
   return v
-    .each(analysis_data.map(d => d.groups.toArray()))
-      .open('div').append(markGroup).close()
-    .close()
-    .each(analysis_data.map(d => d.locations.toArray()))
-      .open('div').append(markLocation).close()
+    .each(analysis_data.map((d) => d.toArray()))
+      .open('div').append(d => markGroup(d.group)).close()
+      .open('div').append(d => markLocation(d.location)).close()
     .close();
 };
 

@@ -1,7 +1,7 @@
 import v from 'v';
 
-import atari   from './analysis/atari';
-import analyze from '../analysis/atari';
+import atari       from './analysis/atari';
+import {allAtaris} from '../analysis/atari';
 
 const mark = (location) => {
   return v
@@ -11,7 +11,7 @@ const mark = (location) => {
 }
 
 const analysis = (board_data) => {
-  const analysis_data = board_data.map(analyze);
+  const analysis_data = board_data.map(allAtaris);
   analysis_data.log();
   return v
     .open('div', {'class': 'goban-analysis'})

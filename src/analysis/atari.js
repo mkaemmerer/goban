@@ -1,15 +1,17 @@
-const atari = (board) => {
-  const groups = board
-    .groups()
-    .filter(g => g.liberties(board).length === 1);
+export const isAtari = (board, group) => {
+  return group.liberties(board).length === 1;
+};
 
-  const locations = groups
-    .flatMap(g => g.liberties(board));
-
+export const getAtari = (board, group) => {
   return {
-    groups:    groups,
-    locations: locations
+    group:    group,
+    location: group.liberties(board).toArray()[0]
   };
 };
 
-export default atari;
+export const allAtaris = (board) => {
+  return board
+    .groups()
+    .filter(g => isAtari(board,g))
+    .map(g => getAtari(board,g));
+};
