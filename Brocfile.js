@@ -3,6 +3,7 @@ const compileES6  = require('broccoli-rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs    = require('rollup-plugin-commonjs');
 const babel       = require('rollup-plugin-babel');
+const replace     = require('rollup-plugin-replace');
 const mergeTrees  = require('broccoli-merge-trees');
 const funnel      = require('broccoli-funnel');
 
@@ -20,7 +21,10 @@ const scripts = compileES6(SRC_DIR, {
           main:   true
         }),
         commonjs(),
-        babel()
+        babel(),
+        replace({
+          'process.env.NODE_ENV': JSON.stringify( 'production' )
+        })
       ],
       dest: 'goban.js'
     }

@@ -1,35 +1,33 @@
-import Bacon from 'baconjs';
-import v     from 'v';
+import Bacon           from 'baconjs';
+import v               from 'v';
+import { createStore } from 'redux';
+
+import storeFromObservable from './lib/store-from-observable';
+import observableFromStore from './lib/observable-from-store';
 
 import board_view from './goban/board';
 import Board      from './data/board';
+import Game       from './data/game';
 
 
-const runGame = (moves) => {
-  const oppositeColor = (color) => {
-    switch(color){
-      case 'black': return 'white';
-      case 'white': return 'black';
-    }
-  };
-  const color = moves
-    .scan('white', oppositeColor);
-  const board = Bacon.combineTemplate({
-      location: moves,
-      color:    color
-    })
-    .scan(Board.empty(), (board, {color, location}) => board.placeStone(color, location));
-
-  return board;
+const placeStone = (game = Game.create(), action) => {
+  switch(action.type){
+    case 'place-stone':
+      return game.placeStone(action.location);
+  }
+  return game;
 };
-
-
-const moves = Bacon.fromEvent(window.document.body, 'click')
+const locations = Bacon.fromEvent(window.document.body, 'click')
   .filter(e => e.target.classList.contains('goban-grid_space'))
   .map(e => e.target.dataset)
   .map(ds => ({x: parseInt(ds.x), y: parseInt(ds.y)}));
 
-const board = runGame(moves);
+
+const store = storeFromObservable(placeStone, locations
+    .map((l) => ({type: 'place-stone', location: l}) ));
+const board = observableFromStore(store)
+  .map((g) => g._board);
+
 
 const el = v
   .open('main')

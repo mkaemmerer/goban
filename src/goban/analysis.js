@@ -12,7 +12,8 @@ const mark = (location) => {
 
 const analysis = (board_data) => {
   const analysis_data = board_data.map(allAtaris);
-  analysis_data.log();
+  analysis_data.onValue(() => {}); //TODO: why does this need to be forced?
+
   return v
     .open('div', {'class': 'goban-analysis'})
       .append(atari(analysis_data))
