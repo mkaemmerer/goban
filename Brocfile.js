@@ -23,7 +23,9 @@ const scripts = compileES6(SRC_DIR, {
         commonjs(),
         babel(),
         replace({
-          'process.env.NODE_ENV': JSON.stringify( 'production' )
+          'process.env.NODE_ENV': JSON.stringify( 'production' ),
+          'process':              undefined,
+          'global.setImmediate':  function(callback){ window.setTimeout(callback, 0); }
         })
       ],
       dest: 'goban.js'
