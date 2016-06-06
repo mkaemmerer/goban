@@ -11,7 +11,7 @@ export default class Group {
   }
   neighbors(){
     return this.locations
-      .flatMap(location => location.neighbors)
+      .flatMap(location => location.neighbors())
       .subtract(this.locations);
   }
   liberties(board){
@@ -22,5 +22,8 @@ export default class Group {
   }
   static single(color, location){
     return new Group(color, Set.single(location));
+  }
+  static fromJS({color, locations}){
+    return new Group(color, locations);
   }
 }

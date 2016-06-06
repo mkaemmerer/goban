@@ -22,6 +22,9 @@ class Game {
   static create(){
     return new Game(Board.empty(), 'black');
   }
+  static fromJS({_board, _color}){
+    return new Game(Board.fromJS(_board), _color);
+  }
 }
 
 export default Game;

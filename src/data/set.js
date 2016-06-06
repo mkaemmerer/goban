@@ -1,3 +1,15 @@
+function equals(item1){
+  return function(item2){
+    if(item1 && item1.equals){
+      return item1.equals(item2);
+    }
+    return item1 === item2;
+  }
+}
+function contains(array, item){
+  return array.findIndex(equals(item)) !== -1;
+}
+
 export default class Set {
   constructor(members){
     this._members = members;
@@ -8,13 +20,13 @@ export default class Set {
   }
 
   contains(e){
-    return this._members.indexOf(e) !== -1;
+    return contains(this._members, e);
   }
   union(set){
     return this.disjointUnion(set.subtract(this));
   }
   subtract(set){
-    const members = this._members.slice(0)
+    const members = this._members
       .filter(e => !set.contains(e));
     return new Set(members);
   }
@@ -30,7 +42,7 @@ export default class Set {
   map(f){
     const members = [];
     this._members.map(f)
-      .forEach(e => { if(members.indexOf(e) === -1){ members.push(e) }});
+      .forEach(e => { if(!contains(members, e)){ members.push(e); }});
     return new Set(members);
   }
   filter(f){
@@ -51,5 +63,8 @@ export default class Set {
   }
   static empty(){
     return new Set([]);
+  }
+  static fromJS({_members}){
+    return new Set(_members);
   }
 }

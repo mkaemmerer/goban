@@ -7,6 +7,30 @@ const Y_MIN = 0;
 const X_MAX = 9;
 const Y_MAX = 9;
 
+class Location {
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+  }
+  neighbors(){
+    const {x, y} = this;
+    const ns     = [];
+
+    if(x > X_MIN)    { ns.push( new Location(x-1, y  )); }
+    if(y > Y_MIN)    { ns.push( new Location(x  , y-1)); }
+    if(x < X_MAX - 1){ ns.push( new Location(x+1, y  )); }
+    if(y < Y_MAX - 1){ ns.push( new Location(x  , y+1)); }
+
+    return new Set(ns);
+  }
+  equals(location){
+    return this.x === location.x && this.y === location.y;
+  }
+  static fromJS({x,y}){
+    return new Location(x,y);
+  }
+}
+
 class Board {
   constructor(intersections){
     this.intersections = intersections;
@@ -28,7 +52,7 @@ class Board {
   }
   _addStone(color, location){
     const stone          = Group.single(color, location);
-    const friendly_group = location.neighbors
+    const friendly_group = location.neighbors()
       .map(l => this.intersectionAt(l).contents)
       .filter(g => g !== null)
       .filter(g => g.color === color)
@@ -37,7 +61,7 @@ class Board {
     return this._setLocations(friendly_group.locations, friendly_group);
   }
   _removeDeadStones(color, location){
-    const dead_groups = location.neighbors
+    const dead_groups = location.neighbors()
       .map(l => this.intersectionAt(l).contents)
       .filter(g => g !== null)
       .filter(g => g.color !== color)
@@ -67,26 +91,25 @@ class Board {
     for(let x=0; x<X_MAX; x++){
       for(let y=0; y<Y_MAX; y++){
         intersections[x * X_MAX + y] = {
-          location: {x: x, y: y},
+          location: new Location(x,y),
           contents: null
         };
       }
     }
-    for(let x=0; x<X_MAX; x++){
-      for(let y=0; y<Y_MAX; y++){
-        const {location} = intersections[x * X_MAX + y];
-        const ns         = [];
-
-        if(x > X_MIN)    { ns.push(intersections[(x-1) * X_MAX + (y)  ].location); }
-        if(y > Y_MIN)    { ns.push(intersections[(x)   * X_MAX + (y-1)].location); }
-        if(x < X_MAX - 1){ ns.push(intersections[(x+1) * X_MAX + (y)  ].location); }
-        if(y < Y_MAX - 1){ ns.push(intersections[(x)   * X_MAX + (y+1)].location); }
-
-        location.neighbors = new Set(ns);
-      }
-    }
 
     return new Board(intersections);
+  }
+  static fromJS({intersections}){
+    return intersections
+      .filter(i => i.contents !== null)
+      .reduce((b,i) => {
+        const {color, locations} = i.contents;
+        const group = Group.fromJS({
+          color:     color,
+          locations: Set.fromJS(locations).map(l => Location.fromJS(l))
+        });
+        return b._setLocations(group.locations, group);
+      }, Board.empty());
   }
 }
 
