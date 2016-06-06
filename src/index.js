@@ -1,18 +1,16 @@
 import Bacon           from 'baconjs';
 import v               from 'v';
-import { createStore } from 'redux';
 
 import storeFromObservable from './lib/store-from-observable';
 import observableFromStore from './lib/observable-from-store';
 
 import board_view from './goban/board';
-import Board      from './data/board';
 import Game       from './data/game';
 
 
 const placeStone = (game = Game.create(), action) => {
   switch(action.type){
-    case 'place-stone':
+    case 'PLACE_STONE':
       return game.placeStone(action.location);
   }
   return game;
@@ -24,7 +22,7 @@ const locations = Bacon.fromEvent(window.document.body, 'click')
 
 
 const store = storeFromObservable(placeStone, locations
-    .map((l) => ({type: 'place-stone', location: l}) ));
+    .map((l) => ({type: 'PLACE_STONE', location: l}) ));
 const board = observableFromStore(store)
   .map((g) => g._board);
 
