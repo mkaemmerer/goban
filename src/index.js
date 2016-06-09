@@ -3,13 +3,14 @@ import v     from 'v';
 
 import {REHYDRATE} from 'redux-persist/src/constants';
 
-
+import makeDOMDriver       from './lib/dom';
 import storeFromObservable from './lib/store-from-observable';
 import observableFromStore from './lib/observable-from-store';
 
 import board_view from './goban/board';
 import Game       from './data/game';
 
+const DOM = makeDOMDriver(window.document.body);
 
 const placeStone = (game = Game.create(), action) => {
   switch(action.type){
@@ -22,12 +23,14 @@ const placeStone = (game = Game.create(), action) => {
   }
   return game;
 };
-const locations = Bacon.fromEvent(window.document.body, 'click')
-  .filter(e => e.target.classList.contains('goban-grid_space'))
+const locations = DOM
+  .select('.goban-grid_space')
+  .events('click')
   .map(e => e.target.dataset)
   .map(ds => ({x: parseInt(ds.x), y: parseInt(ds.y)}));
-const resets    = Bacon.fromEvent(window.document.body, 'click')
-  .filter(e => e.target.classList.contains('reset'));
+const resets    = DOM
+  .select('.reset')
+  .events('click');
 
 const actions = Bacon.mergeAll([
     locations
