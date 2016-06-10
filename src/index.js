@@ -1,7 +1,8 @@
+import setimmediate from 'setimmediate';
 import Bacon from 'baconjs';
 import v     from 'v';
 
-import {REHYDRATE} from 'redux-persist/src/constants';
+import {REHYDRATE} from 'redux-persist/constants';
 
 import makeDOMDriver       from './lib/dom';
 import storeFromObservable from './lib/store-from-observable';
