@@ -17,7 +17,7 @@ const placeStone = (game = Game.create(), action) => {
     case 'RESET':
       return Game.create();
     case 'PLACE_STONE':
-      return game.placeStone(action.location);
+      return game.placeStone(action.payload);
     case REHYDRATE:
       return Game.fromJS(action.payload);
   }
@@ -34,7 +34,7 @@ const resets    = DOM
 
 const actions = Bacon.mergeAll([
     locations
-      .map(l => ({type: 'PLACE_STONE', location: l})),
+      .map(l => ({type: 'PLACE_STONE', payload: l})),
     resets
       .map(() => ({type: 'RESET'}))
   ]);
