@@ -10,8 +10,7 @@ import observableFromStore from './lib/observable-from-store';
 import board_view from './goban/board';
 import Game       from './data/game';
 
-function intent(){
-  const DOM = makeDOMDriver(window.document.body);
+function intent(DOM){
   const locations = DOM
     .select('.goban-grid_space')
     .events('click')
@@ -69,5 +68,6 @@ function view(state){
   return el;
 }
 
-const el = view(state(intent()));
+const DOM = makeDOMDriver(window.document.body);
+const el  = view(state(intent(DOM)));
 window.document.body.appendChild(el);
