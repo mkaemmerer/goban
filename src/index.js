@@ -20,7 +20,11 @@ const placeStone = (game = Game.create(), action) => {
     case 'PLACE_STONE':
       return game.placeStone(action.payload);
     case REHYDRATE:
-      return Game.fromJS(action.payload);
+      try {
+        return Game.fromJS(action.payload);
+      } catch(e){
+        return game;
+      }
   }
   return game;
 };
